@@ -5,7 +5,7 @@ const round = (num) => Number(num).toFixed(8);
 socket.on("balance", (balance) => {
   const balanceSpan = document.getElementById("balance");
 
-  if (balanceSpan === "- - -") {
+  if (balanceSpan.innerText === "- - -") {
     return (balanceSpan.innerText = round(balance));
   }
   setTimeout(() => {
