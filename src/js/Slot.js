@@ -1,24 +1,25 @@
 import Reel from "./Reel.js";
 import Symbol from "./Symbol.js";
+import axios from "axios";
 
 export default class Slot {
   constructor(domElement, config = {}) {
     Symbol.preload();
 
     this.currentSymbols = [
-      ["death_star", "death_star", "death_star"],
-      ["death_star", "death_star", "death_star"],
-      ["death_star", "death_star", "death_star"],
-      ["death_star", "death_star", "death_star"],
-      ["death_star", "death_star", "death_star"],
+      ["grapes", "grapes", "grapes"],
+      ["grapes", "grapes", "grapes"],
+      ["grapes", "grapes", "grapes"],
+      ["grapes", "grapes", "grapes"],
+      ["grapes", "grapes", "grapes"],
     ];
 
     this.nextSymbols = [
-      ["death_star", "death_star", "death_star"],
-      ["death_star", "death_star", "death_star"],
-      ["death_star", "death_star", "death_star"],
-      ["death_star", "death_star", "death_star"],
-      ["death_star", "death_star", "death_star"],
+      ["grapes", "grapes", "grapes"],
+      ["grapes", "grapes", "grapes"],
+      ["grapes", "grapes", "grapes"],
+      ["grapes", "grapes", "grapes"],
+      ["grapes", "grapes", "grapes"],
     ];
 
     this.container = domElement;
@@ -40,15 +41,11 @@ export default class Slot {
     this.config = config;
   }
 
-  spin() {
+  async spin() {
     this.currentSymbols = this.nextSymbols;
-    this.nextSymbols = [
-      [Symbol.random(), Symbol.random(), Symbol.random()],
-      [Symbol.random(), Symbol.random(), Symbol.random()],
-      [Symbol.random(), Symbol.random(), Symbol.random()],
-      [Symbol.random(), Symbol.random(), Symbol.random()],
-      [Symbol.random(), Symbol.random(), Symbol.random()],
-    ];
+
+    const response = await axios.get("http://localhost:3000/api/v1/spin");
+    this.nextSymbols = response.data;
 
     this.onSpinStart(this.nextSymbols);
 
